@@ -18,11 +18,13 @@ export class ToDosComponent implements OnInit{
       this.todos = [
         {
           content : 'First todo',
-          completed : false
+          completed : false,
+          isEdit : false
         },
         {
           content : 'Second todo',
-          completed : true
+          completed : true,
+          isEdit : false
         }
       ]
   }
@@ -42,9 +44,18 @@ export class ToDosComponent implements OnInit{
   addToDo(){
     this.todos?.push({
       content : this.inputTodo,
-      completed : false
+      completed : false,
+      isEdit : false
     });
 
     this.inputTodo = "";
+  }
+
+  toggleEditToDo(id: number){
+    this.todos?.map((v, i) => {
+      if(i == id) v.isEdit = !v.isEdit
+
+      return v;
+    })
   }
 }

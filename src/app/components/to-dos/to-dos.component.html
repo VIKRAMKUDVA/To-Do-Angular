@@ -3,9 +3,36 @@
         <input type="text" name="inputToDo" placeholder="Enter todo...." class="todo-input" [(ngModel)]="inputTodo"/>
         <input type="submit" value="Add To Do" class="todo-submit">
     </form>
-    <div *ngFor="let todo of todos; let i = index;" class="todo {{(todo.completed ? 'done' : '')}}">
-        <div class="id">{{i}}</div>
-        <div class="content" (click)="toggleDone(i)">{{todo.content}}</div>
-        <button class="delete" (click)="deleteToDo(i)">Remove</button>
+
+    <h1>To Do</h1>
+    <div *ngFor="let todo of todos; let i = index;">
+        <div *ngIf="!todo.completed;" class="todo">
+            <div class="id">{{i}}</div>
+            <div  class="content">
+                <div *ngIf="todo.isEdit; else editTemplate">
+                    <form>
+                        <input type="text" name="editToDo" placeholder="Enter updated todo...." class="todo-input" [(ngModel)]="todo.content"/>
+                    </form>
+                </div>
+                
+                <ng-template #editTemplate>
+                    {{todo.content}}
+                </ng-template>
+            </div>
+            
+            <button class="completed" (click)="toggleDone(i)" [hidden]="todo.isEdit">Complete</button>
+            <button class="edit" (click)="toggleEditToDo(i)">{{todo.isEdit?'Done':'Edit'}}</button>
+            <button class="delete" (click)="deleteToDo(i)" [hidden]="todo.isEdit">Delete</button>
+        </div>
+    </div>
+
+    <h1>Completed</h1>
+    <div *ngFor="let todo of todos; let i = index;">
+        <div *ngIf="todo.completed;" class="todo">
+            <div class="id">{{i}}</div>
+            <div class="content">{{todo.content}}</div>
+            <button class="completed" (click)="toggleDone(i)">Add</button>
+            <button class="delete" (click)="deleteToDo(i)">Delete</button>
+        </div>
     </div>
 </div>

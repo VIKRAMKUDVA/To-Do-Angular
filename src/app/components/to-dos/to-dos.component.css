@@ -21,10 +21,6 @@
 	flex: 1 1 100%;
 }
 
-.todo.done .content {
-	text-decoration: line-through;
-}
-
 .todo-input {
 	display: block;
 	width: 100%;
